@@ -1,0 +1,44 @@
+
+
+logging:
+  file:
+    name: ./logs/${spring.application.name}.log 
+  level:
+    root: debug
+
+    org.springframework.security.saml: debug
+    org.opensaml: trace
+    PROTOCOL_MESSAGE : trace
+    
+    
+      
+
+spring:
+  security:
+    saml2:
+      relyingparty:
+        registration:
+          fluxboot3:
+          
+            signing:
+              credentials:
+              - certificate-location:  classpath:service-provider-cert/public.cer
+                private-key-location:  classpath:service-provider-cert/private.key
+            singlelogout:
+              binding: POST
+            #  url: http://localhost:8080/logout/saml2/slo
+              response-url: http://localhost:8080/logout/saml2/slo
+     
+            assertingparty:
+              metadata-uri: classpath:IDP-OKTA-METADATA.xml
+              singlesignon:
+                sign-request: true
+              verification:
+                credentials:
+                - certificate-location: classpath:idp-cert/okta.cert
+               
+                 
+                        
+                
+  application:
+    name: SpringBoot3SAML          
